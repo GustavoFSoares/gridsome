@@ -1,0 +1,14 @@
+{
+  "name": "gridsome-pokedex",
+  "private": true,
+  "scripts": {
+    "build": "node_modules/.bin/gridsome build",
+    "develop": "node_modules/.bin/gridsome develop",
+    "explore": "node_modules/.bin/gridsome explore",
+    "gridsome": "node_modules/.bin/gridsome",
+    "dev": "node_modules/.bin/gridsome develop"
+  },
+  "dependencies": {
+    "gridsome": "^0.7.0"
+  }
+}
