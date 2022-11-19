@@ -9,6 +9,11 @@
     "dev": "node_modules/.bin/gridsome develop"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "gridsome": "^0.7.0",
+    "gridsome-source-rest": "^1.0.11"
+  },
+  "devDependencies": {
+    "sass": "^1.56.1",
+    "sass-loader": "^10.1.1"
   }
 }

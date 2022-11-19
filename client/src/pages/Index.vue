@@ -1,27 +1,72 @@
 <template>
   <Layout>
+    <div class="pokeatlas-container">
+      <section class="pokedex-list">
+        <div class="pokedex-list__inputs-wrapper">
+          <!-- <fm-input
+            class="pokedex-list__input"
+            placeholder="Search"
+            icon="magnifier"
+            type="text"
+            v-model="filters.search"
+          /> -->
 
-    <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-    <g-image alt="Example image" src="~/favicon.png" width="135" />
+          <!-- <fm-select
+            class="pokedex-list__input"
+            placeholder="Show All"
+            icon="chevron-down"
+            type="number"
+            v-model="filters.type"
+            :options="types"
+          /> -->
+        </div>
+        
+        <div class="pokedex-list__pokemons-list">
+          <pokemon-card
+            v-for="pokemon in $page.allPokemons.edges"
+            :key="pokemon.node.id"
+            :identifier="pokemon.node.id"
+            :name="pokemon.node.name"
+            :image="pokemon.node.image"
+            :types="pokemon.node.types"
+          />
+        </div>
 
-    <h1>Hello, world!</h1>
-
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
-    </p>
-
-    <p class="home-links">
-      <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>
-      <a href="https://github.com/gridsome/gridsome" target="_blank" rel="noopener">GitHub</a>
-    </p>
-
+          <!-- <img
+            v-show="loading"
+            class="pokedex-list__loading-pokeball"
+            src="/images/loading-pokeball.gif"
+            alt="Loading Pokeball"
+          /> -->
+      </section>
+    </div>
   </Layout>
 </template>
 
+<page-query>
+query allPokemons {
+	allPokemons(order: ASC) {
+		edges {
+      node {
+        name
+        id
+        image
+        types
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
+import PokemonCard from "../components/PokemonCard.vue"
+
 export default {
   metaInfo: {
-    title: 'Hello, world!'
+    title: 'Pokedex'
+  },
+  components: {
+    PokemonCard
   }
 }
 </script>
