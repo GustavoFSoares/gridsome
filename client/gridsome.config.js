@@ -36,6 +36,22 @@ module.exports = {
         },
       },
     },
+    {
+      use: "gridsome-source-rest",
+      options: {
+        debug: false,
+        axiosConfig: undefined,
+        endpoint: "http://localhost:3000/pokemon-types",
+        typeName: "PokemonTypes",
+        isStatic: false,
+        isCollection: true,
+        responseInterceptor: (responseData) => {
+          console.log(responseData);
+
+          return responseData;
+        },
+      },
+    },
   ],
   chainWebpack(config) {
     // Load variables for all vue-files

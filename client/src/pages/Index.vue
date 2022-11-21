@@ -2,27 +2,27 @@
   <Layout>
     <section class="pokedex-list">
       <div class="pokedex-list__inputs-wrapper">
-        <!-- <fm-input
+        <fm-input
           class="pokedex-list__input"
           placeholder="Search"
           icon="magnifier"
           type="text"
           v-model="filters.search"
-        /> -->
+        />
 
-        <!-- <fm-select
+        <fm-select
           class="pokedex-list__input"
           placeholder="Show All"
           icon="chevron-down"
           type="number"
           v-model="filters.type"
           :options="types"
-        /> -->
+        />
       </div>
       
       <div class="pokedex-list__pokemons-list">
         <pokemon-card
-          v-for="pokemon in $page.allPokemons.edges"
+          v-for="pokemon in filteredPokemons"
           :key="pokemon.node.id"
           :identifier="pokemon.node.id"
           :name="pokemon.node.name"
@@ -42,7 +42,7 @@
 </template>
 
 <page-query>
-query allPokemons {
+query {
 	allPokemons(order: ASC) {
 		edges {
       node {
@@ -53,10 +53,21 @@ query allPokemons {
       }
     }
   }
+
+  allPokemonTypes(order: ASC){
+    edges {
+      node {
+        id 
+      }
+    }
+  }
 }
 </page-query>
 
 <script>
+import FmInput from "@/components/FmInput"
+import FmSelect from "@/components/FmSelect"
+
 import PokemonCard from "../components/PokemonCard.vue"
 
 export default {
@@ -64,7 +75,49 @@ export default {
     title: 'Pokedex'
   },
   components: {
+    FmInput,
+    FmSelect,
     PokemonCard
+  },
+  data() {
+    return {
+      filters: {
+        search: undefined,
+        type: undefined,
+      }
+    }
+  },
+  computed: {
+    types() {
+      const types = this.$page.allPokemonTypes.edges.map(pokemon => {
+        return pokemon.node.id
+      })
+
+      return types
+    },
+    filteredPokemons() {
+      const pokemons = this.$page.allPokemons.edges
+
+      if (!pokemons) {
+        return null
+      }
+
+      let filteredPokemons = [...pokemons]
+
+      if (this.filters.search) {
+        filteredPokemons = filteredPokemons.filter(({ node: { name } }) => {
+          return name.includes(this.filters.search)
+        })
+      }
+
+      if (this.filters.type) {
+        filteredPokemons = filteredPokemons.filter(({ node: { types } }) => {
+          return types.includes(this.filters.type)
+        })
+      }
+
+      return filteredPokemons
+    }
   }
 }
 </script>
