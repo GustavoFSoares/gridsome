@@ -71,8 +71,63 @@ export default {
 }
 </script>
 
-<style>
-.home-links a {
-  margin-right: 1rem;
+<style lang="scss" scoped>
+@import "@/assets/scss/_flex.scss";
+@import "@/assets/scss/_mixins.scss";
+
+.pokedex-list {
+  @extend .flex-column;
+
+  gap: 30px;
+  margin-bottom: 20px;
+  @include media('tablet', 'min') {
+    gap: 20px;
+    margin-bottom: 93px;
+  }
+
+  &__input {
+    @include media('tablet', 'min') {
+      width: 200px;
+    }
+  }
+
+  &__inputs-wrapper {
+    margin-top: 23px;
+
+    gap: 17px;
+    display: flex;
+    flex-direction: column;
+
+    @include media('tablet', 'min') {
+      margin-top: 30px;
+
+      gap: 21px;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+
+  &__pokemons-list {
+    display: grid;
+    gap: 15px;
+
+    @include media('tablet', 'min') {
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    @include media('tablet', '>') {
+      grid-template-columns: repeat(4,1fr);
+      gap: 20px;
+    }
+  }
+
+  &__loading-pokeball {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 5;
+  }
 }
 </style>
