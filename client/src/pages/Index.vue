@@ -69,6 +69,16 @@ export default {
 }
 </script>
 
+<style lang="scss">
+body {
+  background-image: url('/img/pokemons-background.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+
 <style lang="scss" scoped>
 @import "@/assets/scss/_flex.scss";
 @import "@/assets/scss/_mixins.scss";
