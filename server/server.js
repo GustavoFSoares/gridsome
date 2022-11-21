@@ -1,13 +1,28 @@
 const express = require("express");
-const Actions = require("./actions");
+const cors = require("cors");
 
-const POKEAPI = 'https://pokeapi.co/api/v2/'
+const Actions = require("./actions");
 
 const app = express();
 const port = 3000;
 
-app.get("/", async (req, res) => {
+app.use(cors())
+
+app.get("/pokemons", async (req, res) => {
   return res.json(Actions.pokemons)
+});
+
+app.get("/pokemons/:id", async (req, res) => {
+  const { id } = req.params
+  const pokemonData = await Actions.getPokemonById(id)
+  
+  return res.json(pokemonData);
+});
+
+app.get("/pokemon-types", async (req, res) => {
+  const pokemonTypes = await Actions.loadTypes()
+  
+  return res.json(pokemonTypes);
 });
 
 app.get("/missing", async (req, res) => {

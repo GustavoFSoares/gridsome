@@ -7,17 +7,14 @@ const Actions = {
   totalPokemons: 0,
   offset: 0,
   loadPokemons: async () => {
-    console.log("LOAD", `${POKEAPI}/pokemon`);
     const { data } = await axios.get(`${POKEAPI}/pokemon`, {
       params: {
         offset: Actions.offset,
-        // limit: 100,
+        limit: 1154,
       },
     }).catch(e => {
       console.log(e);
     });
-
-    console.log(data);
 
     // Actions.totalPokemons = data.count
 
@@ -36,6 +33,11 @@ const Actions = {
 
     Actions.tryGetPokemonsData();
   },
+  getPokemonById: (pokemonId) => {
+    const pokemon = Actions.pokemons.find(({ id }) => id === pokemonId)
+
+    return pokemon || null
+  },
   storePokemons: (pokemon) => {
     Actions.pokemons = [...pokemon];
   },
@@ -47,7 +49,7 @@ const Actions = {
   },
   tryGetPokemonsData: async () => {
     let currentPokemonIndex = 0
-    console.log("tryGetPokemonsData");
+
     do {
       const pokemon = Actions.pokemons[currentPokemonIndex]
 
@@ -81,14 +83,46 @@ const Actions = {
     const pokemonData = {
       id,
       types: data.types.map((pokemonType) => pokemonType.type.name),
+      stats: data.stats.reduce((amount, statData) => {
+        amount[statData.stat.name] = statData.base_stat;
+
+        return amount;
+      }, {})
     };
 
-    console.log(pokemonData);
-    // return pokemonData
     Actions.updatePokemon(pokemonData, currentPokemonIndex);
-
-    // commit("STORE_SPECIFIC_POKEMONS", pokemonData);
+    Actions.getSpecieData(pokemonData, currentPokemonIndex);
   },
+  getSpecieData: async ({ id }, currentPokemonIndex) => {
+    let speciesData;
+
+    try {
+      const { data: speciesDataRequest } = await axios.get(
+        `${POKEAPI}/pokemon-species/${id}`
+      );
+      speciesData = speciesDataRequest;
+    } catch (e) {
+      console.error("Error trying get pokemon specie data", id);
+    }
+
+    let flavorTexts;
+    if (speciesData) {
+      flavorTexts = speciesData.flavor_text_entries
+        .filter(({ language }) => language.name === "en")
+        .map((flavorText) => flavorText.flavor_text);
+    } else {
+      flavorTexts = ["?"];
+    }
+
+    Actions.updatePokemon({ flavorTexts }, currentPokemonIndex);
+  },
+  loadTypes: async () => {
+    const { data } = await axios.get(`${POKEAPI}/type`);
+
+    const mappedTypes = data.results.map(pokemonType => pokemonType.name)
+
+    return mappedTypes
+  }
 };
 
 module.exports = Actions;
