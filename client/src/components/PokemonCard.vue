@@ -19,13 +19,13 @@
         <div class="info__container">
           <div class="info__wrapper">
             <div class="info__pokemon-types">
-              <img
+              <g-image
                 v-for="type in types"
                 :key="type"
                 :alt="`Pokemon type:${type}`"
                 class="info__pokemon-types-item"
                 :class="`info__pokemon-types-item--${type}`"
-                :src="`/images/pokemon-types/${type}.png`"
+                :src="`/img/pokemon-types/${type}.png`"
               />
             </div>
 
