@@ -1,10 +1,10 @@
 <template>
-  <a
+  <g-link
     class="card"
-    :href="`/list/${identifier}`"
+    :to="`/${identifier}`"
   >
     <div class="card__image">
-      <img :src="image" :alt="name" />
+      <g-image :src="image" :alt="name" />
     </div>
 
     <div
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-  </a>
+  </g-link>
 </template>
 
 <script>
