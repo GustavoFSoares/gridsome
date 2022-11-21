@@ -25,7 +25,7 @@ module.exports = {
       options: {
         debug: false,
         axiosConfig: undefined,
-        endpoint: "http://localhost:3000",
+        endpoint: "http://localhost:3000/pokemons",
         typeName: "Pokemons",
         isStatic: false,
         isCollection: true,
