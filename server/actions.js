@@ -1,20 +1,23 @@
 const axios = require("axios");
 
-const POKEAPI = "https://pokeapi.co/api/v2/";
+const POKEAPI = "https://pokeapi.co/api/v2";
 
 const Actions = {
   pokemons: [],
   totalPokemons: 0,
   offset: 0,
   loadPokemons: async () => {
+    console.log("LOAD", `${POKEAPI}/pokemon`);
     const { data } = await axios.get(`${POKEAPI}/pokemon`, {
       params: {
         offset: Actions.offset,
-        limit: 1150,
+        // limit: 100,
       },
+    }).catch(e => {
+      console.log(e);
     });
 
-    console.log(data.results.length);
+    console.log(data);
 
     // Actions.totalPokemons = data.count
 
