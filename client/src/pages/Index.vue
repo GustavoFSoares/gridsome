@@ -30,13 +30,6 @@
           :types="pokemon.node.types"
         />
       </div>
-
-      <!-- <img
-        v-show="loading"
-        class="pokedex-list__loading-pokeball"
-        src="/images/loading-pokeball.gif"
-        alt="Loading Pokeball"
-      /> -->
     </section>
   </Layout>
 </template>

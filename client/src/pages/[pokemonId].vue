@@ -3,6 +3,7 @@
     <div class="pokedex-profile__showcase">
       <g-image
         class="pokedex-profile__image"
+        v-if="pokemon.image"
         :src="pokemon.image"
         :alt="pokemon.name"
       />
